@@ -1,0 +1,34 @@
+.connect, .chat{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	width: 100%;
+	height: 80vh;
+	border: 1px solid black;
+}
+.footer{
+	position: absolute;
+	bottom: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	width: 100%;
+	height: 10vh;
+	background-color: grey;
+	color: white;
+}
+.footer a{
+	color: white;
+}
+.messageBox, .inputBox{
+	width: 100%;
+	height: 50%;
+	border: 1px solid green;
+}
+.inputBox mat-form-field{
+	width: 100%;
+	position: relative;
+	bottom: 0;
+}

@@ -1,0 +1,27 @@
+<!-- <div class="test">Hello</div> -->
+<section class="connect" *ngIf="!isConnected">
+	<div class="peerid">
+		<b>Your Peer Id : </b><mat-form-field><input matInput type="text" value="{{mypeerid}}" #thepeerid></mat-form-field>
+		<button (click)="copyInputMessage(thepeerid)" value="click to copy"  mat-stroked-button>Copy</button>
+	</div>
+	<div class="remote">
+		<b>Your Friends Peer id : </b><mat-form-field><input matInput type="text" #remotepeerid></mat-form-field>
+		<button (click)="connect(remotepeerid.value)" mat-stroked-button>Connect</button>
+	</div>
+	<div>{{remotePeerId}}</div>
+</section>
+<section class="chat" *ngIf="isConnected">
+	<div class="messageBox" *ngIf="toggle">
+		<!-- {{remoteMessage}} -->
+		<!-- <input type="text" [(value)] = "remoteMessage"> -->
+	</div>
+	<div class="inputBox">
+		<mat-form-field><input matInput type="text"  #myMessage (keyup)="send(myMessage.value)" placeholder="Type here"></mat-form-field>
+		<!-- <button (click)="send(myMessage.value)" value="click to copy"  mat-stroked-button>Copy</button> -->
+	</div>
+</section>
+<section class="footer">
+	<span>&copy; 2019 all rights reserved.</span>
+
+	<span><a href="https://www.vishalpandey.xyz">https://www.vishalpandey.xyz</a></span>
+</section>
