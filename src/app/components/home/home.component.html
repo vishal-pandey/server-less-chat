@@ -16,12 +16,18 @@
 		<!-- <input type="text" [(value)] = "remoteMessage"> -->
 	</div>
 	<div class="inputBox">
-		<mat-form-field><input matInput type="text"  #myMessage (keyup)="send(myMessage.value)" placeholder="Type here"></mat-form-field>
-		<!-- <button (click)="send(myMessage.value)" value="click to copy"  mat-stroked-button>Copy</button> -->
+		<mat-form-field class="ipBox"><textarea matInput type="text"  #myMessage (keyup)="send(myMessage.value)" placeholder="Type here" class="myMessage" [(ngModel)]="vMessage" cols="10"></textarea></mat-form-field>
+		<button (click)="clear()" mat-stroked-button class="clearButton">Clear</button>
 	</div>
 </section>
 <section class="footer">
 	<span>&copy; 2019 all rights reserved.</span>
 
 	<span><a href="https://www.vishalpandey.xyz">https://www.vishalpandey.xyz</a></span>
+</section>
+<section class="progress" *ngIf="progress">
+	<span>
+		<mat-spinner></mat-spinner>
+		<span>Connecting Please wait ...</span>
+	</span>
 </section>

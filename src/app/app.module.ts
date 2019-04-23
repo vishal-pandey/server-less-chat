@@ -64,6 +64,9 @@ import {MatTableModule} from '@angular/material/table';
 
 
 
+// REACTIVE FORMS MODULES
+
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 
 
@@ -120,7 +123,9 @@ import { HomeComponent } from './components/home/home.component';
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: []
 })

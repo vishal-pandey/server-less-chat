@@ -23,57 +23,67 @@ export class HomeComponent implements OnInit {
   remoteMessage:any = "";
   toggle:boolean = true;
 
+  progress:boolean = false;
+
+  vMessage:any = "";
+
+
   ngOnInit() {
   	this.peer = new Peer();
-	var $this = this;
+		var $this = this;
 
-    this.peer.on('open', function(id) {
-	  console.log('My peer ID is: ' + id);
-	  $this.mypeerid = id;
-	});
-	this.peer.on('connection', function(conn) { 
-		$this.isConnected = true;
-		console.log(conn);
-		$this.remoteconn = conn;
-		$this.remotePeerId = $this.remoteconn.id;
-		// $this.remoteconn.on('data', function(data) {
-		// 	console.log('Received', data);
-		// 	$this.remoteMessage = $this.remoteMessage;
-		// })
-		$this.remoteconn.on('data', (data)=>{
-			$this.remoteMessage = data;
+	  this.peer.on('open', function(id) {
+		  console.log('My peer ID is: ' + id);
+		  $this.mypeerid = id;
+		});
+		this.peer.on('connection', function(conn) { 
+
+
+			console.log(conn);
+			$this.remoteconn = conn;
+			$this.remotePeerId = $this.remoteconn.id;
+			$this.isConnected = true;
+			$this.send('.');
+			// $this.remoteconn.on('data', function(data) {
+			// 	console.log('Received', data);
+			// 	$this.remoteMessage = $this.remoteMessage;
+			// })
+			$this.remoteconn.on('data', (data)=>{
+				$this.remoteMessage = data;
+				console.log('Received', data);
+				document.querySelector('.messageBox').innerHTML = data;
+				// $this.receive(data)
+			})
+		});
+		this.peer.on('data', function(data) {
 			console.log('Received', data);
-			document.querySelector('.messageBox').innerHTML = data;
-			// $this.receive(data)
 		})
-	});
-	this.peer.on('data', function(data) {
-		console.log('Received', data);
-	})
   }
 
   connect(id){
+  	this.progress = true;
   	console.log(id);
   	this.remoteconn = this.peer.connect(id);
-  	console.log(this.remoteconn);
+	  this.isConnected = true;
 
   	var $this = this;
+	  $this.progress = false;
 
   	this.remoteconn.on('open', function() {
-	  // Receive messages
-	  $this.isConnected = true;
-	  $this.remotePeerId = $this.remoteconn.id;
-	  // $this.remoteconn.on('data', function(data) {
-	  //   console.log('Received', data);
-	  //   $this.remoteMessage = $this.remoteMessage;
-	  // });
-	  $this.remoteconn.on('data', (data)=>{
-			$this.remoteMessage = data;
-			console.log('Received', data);
-			document.querySelector('.messageBox').innerHTML = data;
-			// $this.receive(data)
-		})
-	});
+		  // Receive messages
+
+		  $this.remotePeerId = $this.remoteconn.id;
+		  // $this.remoteconn.on('data', function(data) {
+		  //   console.log('Received', data);
+		  //   $this.remoteMessage = $this.remoteMessage;
+		  // });
+		  $this.remoteconn.on('data', (data)=>{
+				$this.remoteMessage = data;
+				console.log('Received', data);
+				document.querySelector('.messageBox').innerHTML = data;
+				// $this.receive(data)
+			})
+		});
   }
 
   send(data){
@@ -81,7 +91,7 @@ export class HomeComponent implements OnInit {
   }
 
   receive(data){
-	this.remoteMessage = data;
+		this.remoteMessage = data;
   }
 
 
@@ -89,6 +99,11 @@ export class HomeComponent implements OnInit {
     inputElement.select();
     document.execCommand('copy');
     inputElement.setSelectionRange(0, 0);
+  }
+
+  clear(){
+  	this.vMessage = "";
+  	this.send('');
   }
 
 }
