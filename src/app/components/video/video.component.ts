@@ -25,6 +25,7 @@ export class VideoComponent implements OnInit {
   	this.peer.on('call', function(call) {
 	  navigator.getUserMedia({video: true, audio: true}, function(stream) {
 	  	document.querySelectorAll('video')[0].srcObject = stream
+	  	document.querySelectorAll('video')[0].muted = true
 	    call.answer(stream); // Answer the call with an A/V stream.
 	    call.on('stream', function(remoteStream) {
 	    	console.log(remoteStream)
@@ -55,6 +56,7 @@ export class VideoComponent implements OnInit {
   	navigator.getUserMedia({video: true, audio: true}, (stream)=>{
   		// this.ownVideo = stream;
   		document.querySelectorAll('video')[0].srcObject = stream
+  		document.querySelectorAll('video')[0].muted = true
   		var call = this.peer.call(peerId, stream);
 		call.on('stream', function(remoteStream) {
 	    	console.log(remoteStream)
