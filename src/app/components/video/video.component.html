@@ -1,0 +1,11 @@
+<section class="video-container">
+	<video autoplay="true" class="myVideo"></video>
+	<video autoplay="true" class="friendVideo"></video>
+	<div>{{mypeerid}}</div>
+	<div>
+		<mat-form-field>
+			<input matInput type="text" #remotepeerid>
+		</mat-form-field>
+		<button (click)="startCall(remotepeerid.value)" mat-stroked-button>Connect</button>
+	</div>
+</section>
