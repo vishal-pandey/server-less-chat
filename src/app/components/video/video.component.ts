@@ -13,14 +13,20 @@ export class VideoComponent implements OnInit {
   peer:any;
   mypeerid:any;
   ownVideo:any;
+  isconnected:boolean = false;
 
   ngOnInit() {
+    navigator.getUserMedia({video: true, audio: true}, (stream)=>{
+      // this.ownVideo = stream;
+      document.querySelectorAll('video')[0].srcObject = stream
+      document.querySelectorAll('video')[0].muted = true
+    }, ()=>{});
   	this.peer = new Peer();
   	var $this = this;
   	this.peer.on('open', function(id) {
-	  console.log('My peer ID is: ' + id);
-	  $this.mypeerid = id;
-	});
+  	  console.log('My peer ID is: ' + id);
+  	  $this.mypeerid = id;
+  	});
 
   	this.peer.on('call', function(call) {
 	  navigator.getUserMedia({video: true, audio: true}, function(stream) {
@@ -30,6 +36,7 @@ export class VideoComponent implements OnInit {
 	    call.on('stream', function(remoteStream) {
 	    	console.log(remoteStream)
 	    	document.querySelectorAll('video')[1].srcObject = remoteStream
+        $this.isconnected = true;
 	      // Show stream in some video/canvas element.
 	    });
 	  }, function(err) {
@@ -53,6 +60,7 @@ export class VideoComponent implements OnInit {
 
 
   startCall(peerId){
+    let $this = this;
   	navigator.getUserMedia({video: true, audio: true}, (stream)=>{
   		// this.ownVideo = stream;
   		document.querySelectorAll('video')[0].srcObject = stream
@@ -61,10 +69,17 @@ export class VideoComponent implements OnInit {
 		call.on('stream', function(remoteStream) {
 	    	console.log(remoteStream)
 	    	document.querySelectorAll('video')[1].srcObject = remoteStream
+        $this.isconnected = true;
 		});
   	}, (error)=>{
   		console.log(error)
   	})
+  }
+
+  copyInputMessage(inputElement){
+    inputElement.select();
+    document.execCommand('copy');
+    inputElement.setSelectionRange(0, 0);
   }
 
 }
